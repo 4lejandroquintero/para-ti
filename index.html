@@ -29,10 +29,68 @@
 
     body {
       font-family: 'Outfit', sans-serif;
-      background: var(--crema);
+      background: linear-gradient(180deg, #fff9f8 0%, #faf6f3 30%, #f8f0ee 70%, #fdf8f6 100%);
       color: var(--texto);
       line-height: 1.7;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Fondito suave y decoración a los lados */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(232, 180, 188, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(255, 182, 193, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(248, 235, 232, 0.5) 0%, transparent 70%);
+    }
+
+    .lados-decoracion {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 1.4rem;
+      opacity: 0.28;
+      z-index: 0;
+      pointer-events: none;
+      animation: flotar-lados 5s ease-in-out infinite;
+    }
+    .lados-decoracion span { display: block; animation: late-corazon 2.5s ease-in-out infinite; }
+    .lados-decoracion .d1 { animation-delay: 0s; }
+    .lados-decoracion .d2 { animation-delay: 0.4s; }
+    .lados-decoracion .d3 { animation-delay: 0.8s; }
+    .lados-decoracion .d4 { animation-delay: 1.2s; }
+    .lados-decoracion .d5 { animation-delay: 1.6s; }
+    .lados-decoracion.izq { left: 8px; }
+    .lados-decoracion.der { right: 8px; animation-direction: reverse; }
+    @keyframes flotar-lados {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes late-corazon {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.12); opacity: 0.5; }
+    }
+    @media (max-width: 900px) {
+      .lados-decoracion { width: 40px; font-size: 1rem; opacity: 0.2; }
+    }
+
+    /* Para que el contenido quede por encima del fondo */
+    .hero, .capitulo, .recuerdos, .musica, .cierre, .palabras-tiernas {
+      position: relative;
+      z-index: 1;
     }
 
     /* ========== PELÍCULA: Hero de apertura ========== */
@@ -54,6 +112,26 @@
       inset: 0;
       background: radial-gradient(ellipse at 50% 80%, rgba(212, 165, 165, 0.12) 0%, transparent 60%);
       pointer-events: none;
+    }
+    .hero .fecha-hero {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      opacity: 0.95;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero .infinito {
+      font-size: clamp(3.5rem, 14vw, 7rem);
+      line-height: 1;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+      font-weight: 200;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 40px rgba(232, 180, 188, 0.4), 0 0 80px rgba(232, 180, 188, 0.2);
     }
     .hero h1 {
       font-family: 'Cormorant Garamond', serif;
@@ -282,10 +360,27 @@
   </style>
 </head>
 <body>
+  <div class="lados-decoracion izq" aria-hidden="true">
+    <span class="d1">💕</span>
+    <span class="d2">✨</span>
+    <span class="d3">💗</span>
+    <span class="d4">🌸</span>
+    <span class="d5">💖</span>
+  </div>
+  <div class="lados-decoracion der" aria-hidden="true">
+    <span class="d1">💖</span>
+    <span class="d2">🌸</span>
+    <span class="d3">💗</span>
+    <span class="d4">✨</span>
+    <span class="d5">💕</span>
+  </div>
+
   <!-- Apertura: como el inicio de una película -->
   <header class="hero">
+    <p class="fecha-hero">13 — febrero — 2026</p>
+    <p class="infinito" aria-hidden="true">∞</p>
     <h1>Para ti</h1>
-    <p class="subtitulo-hero">Una historia contada solo para ti</p>
+    <p class="subtitulo-hero">✨ Una historia contada solo para ti 💕</p>
     <div class="flecha">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M12 5v14M5 12l7 7 7-7"/>
@@ -295,37 +390,37 @@
 
   <!-- Capítulo 1: Cómo empezó todo -->
   <section class="capitulo capitulo--claro" id="empezo">
-    <h2 class="titulo-capitulo">Cómo empezó todo</h2>
+    <h2 class="titulo-capitulo">🌸 Cómo empezó todo 🌸</h2>
     <div class="texto-capitulo">
       <p>Desde que llegaste a mi vida, algo cambió dentro de mí. No fue algo ruidoso ni repentino, fue más bien como una paz que empezó a crecer poco a poco.</p>
       <p>Contigo entendí que el amor no solo se trata de momentos grandes, sino de los pequeños instantes que hacen que todo tenga sentido. Tu sonrisa, tu forma de hablar, la manera en que ves la vida… todo en ti me hace sentir afortunado.</p>
-      <p>Hoy quiero que sepas que eres una de las personas más importantes en mi vida, y que cada día agradezco tener la oportunidad de caminar este camino a tu lado.</p>
+      <p>Hoy quiero que sepas que eres una de las personas más importantes en mi vida, y que cada día agradezco tener la oportunidad de caminar este camino a tu lado. 💕</p>
     </div>
   </section>
 
   <!-- Capítulo 2: Lo que siento cuando estoy contigo -->
   <section class="capitulo capitulo--crema" id="siento">
-    <h2 class="titulo-capitulo">Lo que siento cuando estoy contigo</h2>
+    <h2 class="titulo-capitulo">💗 Lo que siento cuando estoy contigo 💗</h2>
     <div class="texto-capitulo">
       <p>Amarte es una de las experiencias más bonitas que me ha regalado la vida. A tu lado he descubierto que el amor también se siente como tranquilidad, como un lugar seguro donde uno puede ser quien realmente es.</p>
       <p>No solo amo lo hermosa que eres, amo tu forma de pensar, tu corazón, tu forma de cuidar a las personas que amas. Amo que seas fuerte, que seas sensible, que tengas sueños y que luches por ellos.</p>
-      <p>Estar contigo me recuerda todos los días que el amor verdadero no es perfecto, pero sí es sincero y lleno de intención.</p>
+      <p>Estar contigo me recuerda todos los días que el amor verdadero no es perfecto, pero sí es sincero y lleno de intención. ✨</p>
     </div>
   </section>
 
   <!-- Capítulo 3: Lo que admiro de ti -->
   <section class="capitulo capitulo--claro" id="admiro">
-    <h2 class="titulo-capitulo">Lo que admiro de ti</h2>
+    <h2 class="titulo-capitulo">✨ Lo que admiro de ti ✨</h2>
     <div class="texto-capitulo">
       <p>Hay muchas cosas que admiro de ti. Admiro tu manera de levantarte incluso en los días difíciles, tu forma de seguir adelante cuando algo no sale como esperabas, tu capacidad de amar con tanta sinceridad.</p>
       <p>Eres una mujer increíble, y a veces deseo que puedas verte con los mismos ojos con los que yo te veo. Porque para mí no solo eres hermosa, eres valiosa, fuerte, inteligente y llena de luz.</p>
-      <p>Tu presencia tiene una forma especial de hacer que el mundo se sienta un poco más bonito.</p>
+      <p>Tu presencia tiene una forma especial de hacer que el mundo se sienta un poco más bonito. 🌸</p>
     </div>
   </section>
 
   <!-- Capítulo 4: Nuestros recuerdos — mensajes + fotos alternados (dinámico) -->
   <section class="recuerdos" id="recuerdos">
-    <h2 class="titulo-capitulo">Nuestros recuerdos</h2>
+    <h2 class="titulo-capitulo">💕 Nuestros recuerdos 💕</h2>
     <div class="recorrido">
       <div class="bloque mensaje">
         <p class="texto">Entre todas las personas del mundo, mi corazón te eligió a ti.</p>
@@ -387,26 +482,26 @@
 
   <!-- Capítulo 5: Nuestro futuro -->
   <section class="capitulo capitulo--rosa" id="futuro">
-    <h2 class="titulo-capitulo">Nuestro futuro</h2>
+    <h2 class="titulo-capitulo">🌻 Nuestro futuro 🌻</h2>
     <div class="texto-capitulo">
       <p>Cuando pienso en el futuro, una de las cosas que más deseo es que sigamos construyendo recuerdos juntos. No sé exactamente cómo será la vida ni qué caminos tomaremos, pero sí sé que me hace feliz imaginarte en ellos.</p>
       <p>Quiero seguir conociéndote más, seguir aprendiendo de ti, seguir compartiendo momentos simples que con el tiempo se vuelven recuerdos inolvidables.</p>
-      <p>Lo que tenemos es algo que quiero cuidar, valorar y proteger, porque no todos los días uno encuentra a alguien que haga que el corazón se sienta en casa.</p>
+      <p>Lo que tenemos es algo que quiero cuidar, valorar y proteger, porque no todos los días uno encuentra a alguien que haga que el corazón se sienta en casa. 💗</p>
     </div>
   </section>
 
   <!-- Capítulo 6: Lo que significas para mí -->
   <section class="capitulo capitulo--crema" id="significas">
-    <h2 class="titulo-capitulo">Lo que significas para mí</h2>
+    <h2 class="titulo-capitulo">💌 Lo que significas para mí 💌</h2>
     <div class="texto-capitulo">
       <p>No eres solo mi novia, eres alguien que llegó a mi vida para enseñarme muchas cosas. Me has enseñado que el amor también se demuestra en los pequeños detalles, en la paciencia, en la forma de escucharnos y apoyarnos.</p>
-      <p>Gracias por ser parte de mi vida, por compartir tus pensamientos, tus sueños y tu corazón conmigo. Tu compañía hace que mis días tengan más sentido, y tu cariño es algo que valoro profundamente.</p>
+      <p>Gracias por ser parte de mi vida, por compartir tus pensamientos, tus sueños y tu corazón conmigo. Tu compañía hace que mis días tengan más sentido, y tu cariño es algo que valoro profundamente. 💌</p>
     </div>
   </section>
 
   <!-- Palabras tiernas (anexo) -->
   <section class="palabras-tiernas" id="tiernas">
-    <h2 class="titulo-capitulo">Cosas que quiero que sepas</h2>
+    <h2 class="titulo-capitulo">🫶 Cosas que quiero que sepas 🫶</h2>
     <div class="carta">Llegaste y cambiaste mi vida. No exagero: contigo las cosas empezaron a tener otro color, otra luz. Gracias por eso.</div>
     <div class="carta">Llegaste a reparar y sanar lo que tú no dañaste. Esas heridas que ya estaban ahí encontraron en ti alguien que las cuidó. Eres bálsamo para mí.</div>
     <div class="carta">Reviviste mi niño interior con tu manera tan linda de dar amor. Esas ganas de jugar, de reír sin filtro, de vivir los momentos como regalos… eso lo despertaste tú, con tu ternura.</div>
@@ -418,7 +513,7 @@
 
   <!-- Canciones / Videos -->
   <section class="musica" id="musica">
-    <h2 class="titulo-capitulo">Canciones para nosotros</h2>
+    <h2 class="titulo-capitulo">🎵 Canciones para nosotros 🎵</h2>
     <p class="nota" style="margin-bottom: 1rem;">Para verte y escucharte 💕</p>
     <div class="contenedor-embed contenedor-embed--youtube" style="margin-top: 1rem;">
       <iframe src="https://www.youtube.com/embed/d2VEFXm9Hps" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" title="YouTube 1"></iframe>
@@ -431,12 +526,12 @@
 
   <!-- Cierre: final de la película -->
   <section class="cierre">
-    <h2 class="titulo-capitulo">Para ti</h2>
+    <h2 class="titulo-capitulo">💖 Para ti 💖</h2>
     <div class="texto-capitulo">
       <p>Hoy quiero recordarte algo muy importante: eres una persona increíble y mereces todo lo bonito que la vida pueda ofrecerte. Gracias por tu amor, por tu forma de ser y por todo lo que aportas a mi vida.</p>
-      <p>Tenerte a mi lado es un regalo que no doy por hecho. Y si hay algo que quiero que siempre recuerdes es esto: eres muy especial para mí, y mi vida es mucho mejor desde que estás en ella.</p>
+      <p>Tenerte a mi lado es un regalo que no doy por hecho. Y si hay algo que quiero que siempre recuerdes es esto: eres muy especial para mí, y mi vida es mucho mejor desde que estás en ella. 💖</p>
     </div>
-    <p class="firma">Hecho con todo el cariño del mundo 💕</p>
+    <p class="firma">Hecho con todo el cariño del mundo 💕 💗 ✨</p>
   </section>
 
   <script>
