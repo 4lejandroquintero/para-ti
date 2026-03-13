@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para ti 💕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rosa-suave: #e8b4bc;
+      --rosa-medio: #d4a5a5;
+      --crema: #faf6f3;
+      --texto: #3d3535;
+      --texto-claro: #5c5151;
+      --oscuro: #2a2424;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--crema);
+      color: var(--texto);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ========== PELÍCULA: Hero de apertura ========== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(160deg, #2a2424 0%, #3d3232 40%, #4a3c3c 100%);
+      position: relative;
+      color: #f5ebe8;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 80%, rgba(212, 165, 165, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 10vw, 5rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero .subtitulo-hero {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-weight: 300;
+      opacity: 0.9;
+      max-width: 420px;
+      margin: 0 auto 3rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero .flecha {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      z-index: 1;
+    }
+    .hero .flecha svg {
+      width: 28px;
+      height: 28px;
+      stroke: rgba(255,255,255,0.6);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ========== Capítulos (secciones tipo película) ========== */
+    .capitulo {
+      padding: 5rem 1.5rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .capitulo .titulo-capitulo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 600;
+      color: var(--rosa-medio);
+      text-align: center;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .capitulo .texto-capitulo {
+      font-size: clamp(1.05rem, 2.2vw, 1.15rem);
+      color: var(--texto-claro);
+      line-height: 1.85;
+      text-align: center;
+    }
+    .capitulo .texto-capitulo p {
+      margin-bottom: 1.25rem;
+    }
+    .capitulo .texto-capitulo p:last-child {
+      margin-bottom: 0;
+    }
+
+    .capitulo--claro {
+      background: #fff;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+    }
+    .capitulo--crema {
+      background: linear-gradient(180deg, #fdf9f7 0%, #f8efe9 100%);
+    }
+    .capitulo--rosa {
+      background: linear-gradient(180deg, #f8ebe8 0%, #f2dfdb 100%);
+    }
+
+    /* ========== Nuestros recuerdos: mensajes + fotos alternados (dinámico) ========== */
+    .recuerdos {
+      padding: 5rem 1rem 5rem;
+      background: linear-gradient(180deg, #2a2424 0%, #352d2d 50%, #2a2424 100%);
+      color: #f0e8e5;
+    }
+    .recuerdos .titulo-capitulo {
+      color: var(--rosa-suave);
+      margin-bottom: 3rem;
+    }
+    .recorrido {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .recorrido .bloque {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 1.5rem;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .recorrido .bloque.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .recorrido .bloque.mensaje {
+      padding: 1.75rem 2rem;
+      background: rgba(255,255,255,0.06);
+      border-radius: 20px;
+      border-left: 4px solid var(--rosa-suave);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .recorrido .bloque.mensaje .texto {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.15rem, 2.6vw, 1.4rem);
+      color: #f5ebe8;
+      line-height: 1.7;
+      font-style: italic;
+    }
+    .recorrido .bloque.mensaje .detalle {
+      margin-top: 0.75rem;
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+    .recorrido .bloque.foto {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .recorrido .bloque.foto:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 56px rgba(0,0,0,0.6);
+    }
+    .recorrido .bloque.foto img {
+      width: 100%;
+      height: auto;
+      display: block;
+      vertical-align: top;
+    }
+
+    /* ========== Música ========== */
+    .musica {
+      padding: 5rem 2rem;
+      background: linear-gradient(180deg, #f5e6e0 0%, #edd5d0 100%);
+    }
+    .musica .titulo-capitulo {
+      color: var(--texto);
+      margin-bottom: 0.5rem;
+    }
+    .musica .contenedor-embed {
+      max-width: 480px;
+      margin: 1.5rem auto 1rem;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    }
+    .musica .contenedor-embed iframe {
+      width: 100%;
+      height: 152px;
+      border: none;
+      display: block;
+    }
+    .musica .contenedor-embed--youtube {
+      max-width: 560px;
+    }
+    .musica .contenedor-embed--youtube iframe {
+      height: 315px;
+    }
+    .musica .nota {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--texto-claro);
+      margin-top: 0.5rem;
+    }
+
+    /* ========== Cierre (final de película) ========== */
+    .cierre {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: linear-gradient(180deg, #2a2424 0%, #1f1b1b 100%);
+      color: #f5ebe8;
+    }
+    .cierre .titulo-capitulo {
+      color: var(--rosa-suave);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      text-transform: none;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .cierre .texto-capitulo {
+      color: rgba(255,255,255,0.92);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .cierre .firma {
+      margin-top: 2.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      opacity: 0.95;
+    }
+
+    /* ========== Palabras tiernas (cartas) ========== */
+    .palabras-tiernas {
+      padding: 5rem 1.5rem;
+      max-width: 640px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #fdf9f7 0%, #faf0eb 100%);
+    }
+    .palabras-tiernas .titulo-capitulo {
+      margin-bottom: 2rem;
+    }
+    .palabras-tiernas .carta {
+      background: #fff;
+      padding: 1.5rem 1.75rem;
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+      border-left: 4px solid var(--rosa-suave);
+      font-style: italic;
+      color: var(--texto-claro);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    .palabras-tiernas .carta:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Apertura: como el inicio de una película -->
+  <header class="hero">
+    <h1>Para ti</h1>
+    <p class="subtitulo-hero">Una historia contada solo para ti</p>
+    <div class="flecha">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Capítulo 1: Cómo empezó todo -->
+  <section class="capitulo capitulo--claro" id="empezo">
+    <h2 class="titulo-capitulo">Cómo empezó todo</h2>
+    <div class="texto-capitulo">
+      <p>Desde que llegaste a mi vida, algo cambió dentro de mí. No fue algo ruidoso ni repentino, fue más bien como una paz que empezó a crecer poco a poco.</p>
+      <p>Contigo entendí que el amor no solo se trata de momentos grandes, sino de los pequeños instantes que hacen que todo tenga sentido. Tu sonrisa, tu forma de hablar, la manera en que ves la vida… todo en ti me hace sentir afortunado.</p>
+      <p>Hoy quiero que sepas que eres una de las personas más importantes en mi vida, y que cada día agradezco tener la oportunidad de caminar este camino a tu lado.</p>
+    </div>
+  </section>
+
+  <!-- Capítulo 2: Lo que siento cuando estoy contigo -->
+  <section class="capitulo capitulo--crema" id="siento">
+    <h2 class="titulo-capitulo">Lo que siento cuando estoy contigo</h2>
+    <div class="texto-capitulo">
+      <p>Amarte es una de las experiencias más bonitas que me ha regalado la vida. A tu lado he descubierto que el amor también se siente como tranquilidad, como un lugar seguro donde uno puede ser quien realmente es.</p>
+      <p>No solo amo lo hermosa que eres, amo tu forma de pensar, tu corazón, tu forma de cuidar a las personas que amas. Amo que seas fuerte, que seas sensible, que tengas sueños y que luches por ellos.</p>
+      <p>Estar contigo me recuerda todos los días que el amor verdadero no es perfecto, pero sí es sincero y lleno de intención.</p>
+    </div>
+  </section>
+
+  <!-- Capítulo 3: Lo que admiro de ti -->
+  <section class="capitulo capitulo--claro" id="admiro">
+    <h2 class="titulo-capitulo">Lo que admiro de ti</h2>
+    <div class="texto-capitulo">
+      <p>Hay muchas cosas que admiro de ti. Admiro tu manera de levantarte incluso en los días difíciles, tu forma de seguir adelante cuando algo no sale como esperabas, tu capacidad de amar con tanta sinceridad.</p>
+      <p>Eres una mujer increíble, y a veces deseo que puedas verte con los mismos ojos con los que yo te veo. Porque para mí no solo eres hermosa, eres valiosa, fuerte, inteligente y llena de luz.</p>
+      <p>Tu presencia tiene una forma especial de hacer que el mundo se sienta un poco más bonito.</p>
+    </div>
+  </section>
+
+  <!-- Capítulo 4: Nuestros recuerdos — mensajes + fotos alternados (dinámico) -->
+  <section class="recuerdos" id="recuerdos">
+    <h2 class="titulo-capitulo">Nuestros recuerdos</h2>
+    <div class="recorrido">
+      <div class="bloque mensaje">
+        <p class="texto">Entre todas las personas del mundo, mi corazón te eligió a ti.</p>
+        <span class="detalle">💕</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto1.png" alt="Nosotros"></div>
+      <div class="bloque mensaje">
+        <p class="texto">A tu lado entendí lo que significa amar de verdad.</p>
+        <span class="detalle">💌</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto2.png" alt="Juntos"></div>
+      <div class="bloque mensaje">
+        <p class="texto">Cada día contigo es un regalo.</p>
+        <span class="detalle">✨</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto3.png" alt="Tú y yo"></div>
+      <div class="bloque mensaje">
+        <p class="texto">Tu sonrisa es una de las cosas más bonitas que tiene mi vida.</p>
+        <span class="detalle">🌻</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto4.png" alt="Recuerdo"></div>
+      <div class="bloque mensaje">
+        <p class="texto">No eres solo mi novia, eres mi compañera de vida.</p>
+        <span class="detalle">🌙</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto5.png" alt="Aventuras"></div>
+      <div class="bloque mensaje">
+        <p class="texto">Contigo aprendí que el amor también se siente como paz.</p>
+        <span class="detalle">💛</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto6.png" alt="Siempre"></div>
+      <div class="bloque mensaje">
+        <p class="texto">Tu forma de ser ilumina mis días.</p>
+        <span class="detalle">✨</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto7.png" alt="Momentos"></div>
+      <div class="bloque mensaje">
+        <p class="texto">Eres la respuesta a muchas de las cosas que le pedí a la vida.</p>
+        <span class="detalle">💕</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto8.png" alt="Contigo"></div>
+      <div class="bloque mensaje">
+        <p class="texto">Amarte es una de las decisiones más bonitas que he tomado.</p>
+        <span class="detalle">💌</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto9.png" alt="Recuerdos"></div>
+      <div class="bloque mensaje">
+        <p class="texto">Si volviera a empezar mi vida, te elegiría otra vez.</p>
+        <span class="detalle">🌻</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto10.png" alt="Noche"></div>
+      <div class="bloque mensaje">
+        <p class="texto">Contigo quiero seguir construyendo muchos recuerdos.</p>
+        <span class="detalle">💛</span>
+      </div>
+      <div class="bloque foto"><img src="fotos/foto11.png" alt="Para siempre"></div>
+    </div>
+  </section>
+
+  <!-- Capítulo 5: Nuestro futuro -->
+  <section class="capitulo capitulo--rosa" id="futuro">
+    <h2 class="titulo-capitulo">Nuestro futuro</h2>
+    <div class="texto-capitulo">
+      <p>Cuando pienso en el futuro, una de las cosas que más deseo es que sigamos construyendo recuerdos juntos. No sé exactamente cómo será la vida ni qué caminos tomaremos, pero sí sé que me hace feliz imaginarte en ellos.</p>
+      <p>Quiero seguir conociéndote más, seguir aprendiendo de ti, seguir compartiendo momentos simples que con el tiempo se vuelven recuerdos inolvidables.</p>
+      <p>Lo que tenemos es algo que quiero cuidar, valorar y proteger, porque no todos los días uno encuentra a alguien que haga que el corazón se sienta en casa.</p>
+    </div>
+  </section>
+
+  <!-- Capítulo 6: Lo que significas para mí -->
+  <section class="capitulo capitulo--crema" id="significas">
+    <h2 class="titulo-capitulo">Lo que significas para mí</h2>
+    <div class="texto-capitulo">
+      <p>No eres solo mi novia, eres alguien que llegó a mi vida para enseñarme muchas cosas. Me has enseñado que el amor también se demuestra en los pequeños detalles, en la paciencia, en la forma de escucharnos y apoyarnos.</p>
+      <p>Gracias por ser parte de mi vida, por compartir tus pensamientos, tus sueños y tu corazón conmigo. Tu compañía hace que mis días tengan más sentido, y tu cariño es algo que valoro profundamente.</p>
+    </div>
+  </section>
+
+  <!-- Palabras tiernas (anexo) -->
+  <section class="palabras-tiernas" id="tiernas">
+    <h2 class="titulo-capitulo">Cosas que quiero que sepas</h2>
+    <div class="carta">Llegaste y cambiaste mi vida. No exagero: contigo las cosas empezaron a tener otro color, otra luz. Gracias por eso.</div>
+    <div class="carta">Llegaste a reparar y sanar lo que tú no dañaste. Esas heridas que ya estaban ahí encontraron en ti alguien que las cuidó. Eres bálsamo para mí.</div>
+    <div class="carta">Reviviste mi niño interior con tu manera tan linda de dar amor. Esas ganas de jugar, de reír sin filtro, de vivir los momentos como regalos… eso lo despertaste tú, con tu ternura.</div>
+    <div class="carta">Te agradezco este tiempo de novios. Cada día a tu lado es un capítulo que atesoro. No doy por hecho nada de lo que vivimos.</div>
+    <div class="carta">Me encanta tu ternura. La forma en que das amor: con los ojos, con los gestos, con las palabras y con el silencio. Eso me desarma en el mejor sentido.</div>
+    <div class="carta">Amo cómo me miras, cómo me abrazas y cómo me dices las cosas. Tu forma de querer es una de las cosas más bonitas que me ha pasado.</div>
+    <div class="carta">Gracias por ser tan tierna conmigo. Gracias por elegirme cada día. Eres un regalo que no me cansaré de agradecer. 💕</div>
+  </section>
+
+  <!-- Canciones / Videos -->
+  <section class="musica" id="musica">
+    <h2 class="titulo-capitulo">Canciones para nosotros</h2>
+    <p class="nota" style="margin-bottom: 1rem;">Para verte y escucharte 💕</p>
+    <div class="contenedor-embed contenedor-embed--youtube" style="margin-top: 1rem;">
+      <iframe src="https://www.youtube.com/embed/d2VEFXm9Hps" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" title="YouTube 1"></iframe>
+    </div>
+    <div class="contenedor-embed contenedor-embed--youtube" style="margin-top: 1rem;">
+      <iframe src="https://www.youtube.com/embed/LcKVOWOdFvY" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" title="YouTube 2"></iframe>
+    </div>
+    <p class="nota" style="margin-top: 1.5rem;">Para ti, lo que quieras de mí. Y creo en ti. 💕</p>
+  </section>
+
+  <!-- Cierre: final de la película -->
+  <section class="cierre">
+    <h2 class="titulo-capitulo">Para ti</h2>
+    <div class="texto-capitulo">
+      <p>Hoy quiero recordarte algo muy importante: eres una persona increíble y mereces todo lo bonito que la vida pueda ofrecerte. Gracias por tu amor, por tu forma de ser y por todo lo que aportas a mi vida.</p>
+      <p>Tenerte a mi lado es un regalo que no doy por hecho. Y si hay algo que quiero que siempre recuerdes es esto: eres muy especial para mí, y mi vida es mucho mejor desde que estás en ella.</p>
+    </div>
+    <p class="firma">Hecho con todo el cariño del mundo 💕</p>
+  </section>
+
+  <script>
+    (function() {
+      var bloques = document.querySelectorAll('.recorrido .bloque');
+      if (!bloques.length) return;
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+      bloques.forEach(function(bloque) { observer.observe(bloque); });
+    })();
+  </script>
+</body>
+</html>

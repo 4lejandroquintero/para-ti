@@ -1,0 +1,7 @@
+{
+  "name": "para-mi-novia",
+  "private": true,
+  "scripts": {
+    "start": "npx serve -p 8080"
+  }
+}
